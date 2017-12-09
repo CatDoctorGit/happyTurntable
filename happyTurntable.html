@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>快乐转盘</title>
+	<script type="text/javascript" src="js/jquery-1.8.2.js"></script>
+	<script type="text/javascript" src="js/jQueryRotate.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/number.css">
+</head>
+<body>
+<div id="gold">
+	<!-- <img class="gold" src="img/jinbi.jpg" height="20" width="20"> -->
+	</div>
+	<center>
+	<div id="big">
+	<img src="img/zhuanpan.jpg" id="rotateImg">
+		<div id="small">
+		<div id="needle"></div>
+		<input type="button" value="开始" id="buttonId" onclick="start();">
+		</div>
+	</div></center>
+	<div class="pp1"></div>
+	<div class="pp2"></div>
+	<div class="pp3"></div>
+
+	<script type="text/javascript">
+	var angle = 0;
+	var bl = false;
+	var str;
+	function goldSet(){
+		for(var i=0;i<70;i++){
+			$("#gold").after("<img class='gold' src='img/jinbi.jpg' height='20' width='20'>");
+		}
+	}
+	function gold(){
+		for(var i=0;i<(Math.random()*15)+10;i++){
+			$("#gold").after("<img class='gold' src='img/jinbi.jpg' height='20' width='20'>");
+		}
+		$(".gold").each(function(){
+			$(this).css({
+				left: (Math.random()*1500)+10,
+				top: (Math.random()*200)+10
+			});
+			$(this).animate({
+				top: 700},
+				"slow")
+		});
+	}
+	
+	function start(){
+		if(bl){
+			return ;
+		}
+		function rotateFun(){
+			$('#rotateImg').rotate({   
+        		animateTo: angle+=5,
+        		callback: rotateFun, 
+        		duration: 10,
+        		easing: $.easing.easeInOutExpo
+    		}); 
+		}
+		rotateFun();
+    	setTimeout(stop,(Math.random()*10000)+5000);
+	}
+	function stop(){
+		bl = true;
+		$("#rotateImg").stopRotate();
+		var num = angle%360;
+		if(num>0&&num<=30){
+			alert("您是土匪");
+			str = "此山是我开，此树是我栽";
+		}else if(num>30&&num<=60){
+			alert("您是佳人");
+			str = "佳人，在水一方";
+		}else if(num>60&&num<=90){
+			alert("您是诗人");
+			str = "此时此刻，我想吟诗一首";
+		}else if(num>90&&num<=120){
+			alert("您是丞相");
+			str = "主公，我们要草船借箭";
+		}else if(num>120&&num<=150){
+			alert("您是老鸨");
+			str = "官人，我们这的姑娘美着呢";
+		}else if(num>150&&num<=180){
+			alert("您是名妓");
+			str = "大爷，进来玩会啊";
+		}else if(num>180&&num<=210){
+			alert("您是皇帝");
+			str = "吾皇万岁万岁万万岁";
+		}else if(num>210&&num<=240){
+			alert("您是书生");
+			str = "小生正要进京赶考呢";
+		}else if(num>240&&num<=270){
+			alert("您是将军");
+			str = "二营长，把我意大利炮拿来";
+		}else if(num>270&&num<=300){
+			alert("您是嫔妃");
+			str = "皇上，臣妾有礼了";
+		}else if(num>300&&num<=330){
+			alert("您是财主");
+			str = "买买买，啥都买";
+		}else if(num>330&&num<360){
+			alert("您是和尚");
+			str = "阿弥陀佛，善哉善哉";
+		}
+		show();
+	}
+	function show(){
+		$(".pp1").append(str);
+		$(".pp2").append(str);
+		$(".pp3").append(str);
+		setInterval(function(){$(".pp1").slideToggle("slow");
+								$(".pp2").slideToggle("slow");
+								$(".pp3").slideToggle("slow");},2000)
+		// goldSet();
+		setInterval(gold,200);
+		setInterval(function(){$(".gold").remove();},2500);
+				}
+		
+	</script>
+</body>
+</html>
